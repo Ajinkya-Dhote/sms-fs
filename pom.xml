@@ -24,5 +24,6 @@
   </dependencies>
   <modules>
   	<module>frontend</module>
+  	<module>sms-backend</module>
   </modules>
 </project>
