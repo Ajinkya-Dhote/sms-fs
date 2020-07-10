@@ -35,4 +35,20 @@ public class SmsServiceImpl implements SmsService {
 		return repository.saveAll(data);
 	}
 
+	@Override
+	public SmsData update(SmsData data) {
+		SmsData tempData = repository.getOne(data.getId());
+		tempData.setCity(data.getCity());
+		tempData.setColor(data.getColor());
+		tempData.setPrice(data.getPrice());
+		tempData.setStartDate(data.getStartDate());
+		tempData.setEndDate(data.getEndDate());
+		return repository.save(tempData);
+	}
+
+	@Override
+	public void delete(Integer id) {
+		repository.deleteById(id);
+	}
+
 }

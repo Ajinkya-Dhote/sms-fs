@@ -15,6 +15,10 @@ public interface SmsService {
 
 	List<SmsData> add(List<SmsData> data);
 
+	SmsData update(SmsData data);
+
+	void delete(Integer id);
+
 
 
 }
