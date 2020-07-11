@@ -1,0 +1,51 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+version: '3'
+
+#Define services
+services:
+
+  #PostgreSQL Database for the application
+  sms-postgres:
+    image: "postgres:9.6-alpine"
+    container_name: sms-postgres
+    #Volume mounted for database for the storage
+    volumes:
+      - sms-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 # Forward the exposed port 5432 on the container to port 5432 on the host machine
+
+    #Environment variable for DB name, user and password
+    environment:
+      - POSTGRES_DB=sms
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=TodayisJune5
+
+  #Back-end Spring Boot Application
+  sms-backend:
+    #The docker file in sms-backend build the jar and provides the docker image with the following name.
+    build: ./sms-backend
+    container_name: sms-backend
+
+    #Environment variables for Spring Boot Application.
+    environment:
+      - DB_SERVER=sms-postgres
+      - POSTGRES_DB=sms
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=TodayisJune5
+    ports:
+      - 8080:8080 # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    links:
+      - sms-postgres
+
+  #Fron-end Angular Application
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - 80:80
+    links:
+      - sms-backend
+
+#Volumes for DB data
+volumes:
+  sms-data:
