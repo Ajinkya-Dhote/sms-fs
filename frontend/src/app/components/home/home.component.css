@@ -15,7 +15,9 @@ table {
   width: 100%;
 }
 
-
+.note {
+    padding: 0 10px;
+}
 
 /* Column Widths */
 .mat-column-number,
