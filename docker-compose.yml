@@ -1,24 +1,28 @@
-# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
-version: '3'
+version: '3.8'
 
 #Define services
 services:
 
   #PostgreSQL Database for the application
   sms-postgres:
-    image: "postgres:9.6-alpine"
+    image: "postgres:12"
+    restart: always
     container_name: sms-postgres
-    #Volume mounted for database for the storage
-    volumes:
-      - sms-data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432 # Forward the exposed port 5432 on the container to port 5432 on the host machine
 
     #Environment variable for DB name, user and password
     environment:
       - POSTGRES_DB=sms
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=TodayisJune5
+    
+    #Volume mounted for database for the storage
+    volumes:
+      - type: bind
+        source: ./sms-data/
+        target: /var/lib/postgresql/data/
+
+    ports:
+      - 5432:5432 # Forward the exposed port 5432 on the container to port 5432 on the host machine
 
   #Back-end Spring Boot Application
   sms-backend:
@@ -46,6 +50,3 @@ services:
     links:
       - sms-backend
 
-#Volumes for DB data
-volumes:
-  sms-data:
