@@ -40,5 +40,7 @@ public class SmsData {
 	
 	private Double price;
 	private String color;
+	
+	private String status;
 
 }

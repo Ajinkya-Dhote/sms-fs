@@ -45,14 +45,14 @@ public class SmsController {
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
 	
-	@PutMapping("/")
+	@PostMapping("/")
 	public ResponseEntity<SmsData> addData(@RequestBody SmsData data) {
 		LOGGER.debug("adding new entry to database, data: {}", data);
 		
 		return new ResponseEntity<>(service.add(data), HttpStatus.OK);
 	}
 	
-	@PutMapping("/bulk")
+	@PostMapping("/bulk")
 	public ResponseEntity<String> addData(@RequestBody List<SmsData> data) {
 		LOGGER.debug("adding new entry to database, data: {}", data);
 		
@@ -60,7 +60,7 @@ public class SmsController {
 		return new ResponseEntity<>("Data added", HttpStatus.OK);
 	}
 	
-	@PostMapping("/")
+	@PutMapping("/")
 	public ResponseEntity<SmsData> updateData(@RequestBody SmsData data) {
 		LOGGER.debug("updating entry in database, data: {}", data);
 		
